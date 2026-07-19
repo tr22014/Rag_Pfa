@@ -31,3 +31,5 @@ class Document(Base):
     collection = relationship("Collection", back_populates="documents")
     uploaded_by = relationship("User", back_populates="documents")
     sources = relationship("Source", back_populates="document")
+
+    chunks = relationship("Chunk", back_populates="document", cascade="all, delete-orphan")

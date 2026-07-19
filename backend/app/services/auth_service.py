@@ -8,7 +8,7 @@ from sqlalchemy.orm import Session
 from app.services.user_service import UserService
 from app.schemas.user import UserCreate
 from app.models.user import User
-
+from app.config import settings
 
 class AuthService:
 
@@ -16,9 +16,9 @@ class AuthService:
     # Configuration JWT
     # ----------------------------
 
-    SECRET_KEY = "82d35af060fee39794dcb90bc0a73a58c9f6b4f4fb822b67e2a1b6ac5cf4ab53"
-    ALGORITHM = "HS256"
-    ACCESS_TOKEN_EXPIRE_MINUTES = 60
+    settings.secret_key,
+    settings.algorithm,
+    settings.access_token_expire_minutes
 
     pwd_context = CryptContext(
         schemes=["bcrypt"],

@@ -1,8 +1,9 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import declarative_base, sessionmaker
+from app.config import settings
 
 # URL de connexion PostgreSQL
-DATABASE_URL = "postgresql://postgres:root@localhost:5432/Rag_Chatbot"
+DATABASE_URL = settings.database_url
 # Création du moteur
 engine = create_engine(DATABASE_URL)
 

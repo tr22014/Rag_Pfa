@@ -12,12 +12,9 @@ class ConversationService:
     @staticmethod
     def create_conversation(
         db: Session,
-        conversation: ConversationCreate
+        conversation: ConversationCreate,
+        user_id: int
     ) -> Conversation:
-        """
-        Créer une nouvelle conversation.
-        """
-
         db_conversation = Conversation(
             title=conversation.title,
             user_id=conversation.user_id

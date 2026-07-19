@@ -6,6 +6,10 @@ class ConversationCreate(BaseModel):
     title: str | None = None
 
 
+class ConversationUpdate(BaseModel):
+    title: str | None = None
+
+
 class ConversationOut(BaseModel):
     id: int
     title: str | None

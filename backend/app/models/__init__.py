@@ -5,3 +5,4 @@ from app.models.conversation import Conversation
 from app.models.message import Message, MessageRole
 from app.models.source import Source
 from app.models.system_log import SystemLog
+from app.models.chunk import Chunk  
