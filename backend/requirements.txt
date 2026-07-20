@@ -96,3 +96,6 @@ pytest
 # OPTIONAL
 # ==========================
 rich
+
+sentence-transformers
+torch
