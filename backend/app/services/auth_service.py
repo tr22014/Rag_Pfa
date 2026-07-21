@@ -16,9 +16,9 @@ class AuthService:
     # Configuration JWT
     # ----------------------------
 
-    settings.secret_key,
-    settings.algorithm,
-    settings.access_token_expire_minutes
+    SECRET_KEY = settings.secret_key
+    ALGORITHM = settings.algorithm
+    ACCESS_TOKEN_EXPIRE_MINUTES = settings.access_token_expire_minutes
 
     pwd_context = CryptContext(
         schemes=["bcrypt"],

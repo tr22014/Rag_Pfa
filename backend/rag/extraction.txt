@@ -1,0 +1,214 @@
+===== Page 1 =====
+Internship Subject
+Design and Development of an AI-Powered Enterprise
+Knowledge Management Platform
+Retrieval-Augmented Generation (RAG) & Large Language Models
+Host company: OneClick — Digital Agency, Marrakech Type: R&D / Full-stack + AI
+engineering internship Supervision: Ali Ourtanane
+1. Context
+Modern organizations generate large volumes of unstructured information spread across
+many document formats and storage systems: contracts, reports, procedures, invoices,
+presentations, scanned files, internal wikis. Finding a specific piece of information inside
+this mass is slow, manual, and error-prone.
+Classic keyword search fails because it matches words, not meaning. Generic AI chatbots
+fail because they don’t know the company’s internal documents and tend to invent answers.
+The goal of this internship is to build an intelligent platform that centralizes enterprise
+knowledge, indexes documents automatically, and answers questions in natural language —
+grounded exclusively in the organization’s own documents, with source citations.
+The technical foundation is Retrieval-Augmented Generation (RAG): retrieve the relevant
+passages first, then let the LLM answer using only those passages.
+2. Objective
+Design, develop, and deploy a functional web platform that allows a company to:
+1. Upload and organize its internal documents.
+2. Automatically process, index, and vectorize them.
+3. Search them semantically, in natural language, in several languages.
+
+===== Page 2 =====
+4. Ask questions to an AI assistant that answers with sources, never from imagination.
+5. Administer users, collections, and models through a dashboard.
+6. Measure usage and knowledge coverage through analytics.
+The intern is expected to work as a junior R&D engineer would in a real software company:
+understand the need, propose an architecture, build it, document it, and demo it.
+3. Functional Scope
+3.1 Document Management
+Upload, organize, and version documents in the following formats:
+PDF
+Word (DOCX)
+Excel (XLSX)
+PowerPoint (PPTX)
+Plain text / Markdown
+Images (via OCR)
+Web pages (URL ingestion)
+Documents are grouped into knowledge collections (e.g. HR, Legal, Technical).
+3.2 Data Processing Pipeline
+An automated, asynchronous pipeline that:
+Extracts raw content from each format (including OCR for scanned files)
+Cleans and normalizes the text
+Splits documents into semantic chunks (with overlap strategy)
+Generates embeddings for each chunk
+Stores vectors + metadata (source file, page, section, collection, permissions)
+3.3 AI Search Engine
+Semantic (vector) search
+
+===== Page 3 =====
+Hybrid search (vector + keyword) is a plus
+Natural-language query understanding
+Context retrieval and re-ranking
+Source citation on every result
+Multilingual queries (FR / EN / AR at minimum for query handling)
+3.4 Conversational Assistant
+A secure assistant that answers only from the internal knowledge base:
+Conversation history
+Context awareness across turns
+Follow-up questions
+Source references (document + page)
+Confidence indicator
+Explicit “I don’t know” when the knowledge base has no answer — this behavior is
+mandatory, not optional
+3.5 Administration Dashboard
+User management
+Role & permission management (who can see which collection)
+Knowledge collections management
+Document management (re-index, delete, status of the pipeline)
+AI model configuration (model, temperature, chunk size, top-k)
+Search analytics
+3.6 Analytics
+Most consulted documents
+Most frequent questions
+Unanswered questions (the most valuable metric: it reveals knowledge gaps)
+Knowledge coverage per collection
+
+===== Page 4 =====
+AI response statistics (latency, tokens, confidence)
+4. Target Architecture
+                    Documents
+                        │
+             PDF DOCX XLSX PPTX IMG URL
+                        │
+                        ▼
+                Extraction & OCR
+                        │
+                        ▼
+                 Text Processing
+                        │
+                        ▼
+                Chunk Generation
+                        │
+                        ▼
+              Embedding Generation
+                        │
+                        ▼
+                 Vector Database
+                        │
+              ┌─────────┴─────────┐
+              │                   │
+      Semantic Search        Metadata DB
+              │                   │
+              └─────────┬─────────┘
+                        │
+                        ▼
+                       LLM
+                        │
+                        ▼
+                 AI Response API
+                        │
+                        ▼
+                Next.js Frontend
+5. Technology Stack
+Layer
+Technology
+
+===== Page 5 =====
+Frontend
+Next.js, React, TypeScript, Tailwind CSS
+Backend
+Python, FastAPI
+AI / Orchestration
+LangChain or LlamaIndex
+LLM
+OpenAI, Claude, or open-source models
+Embeddings
+Sentence Transformers
+Database
+PostgreSQL
+Vector store
+pgvector or Qdrant
+File storage
+Cloudflare R2 or Amazon S3
+Authentication
+JWT or Clerk
+Deployment
+Docker, Nginx
+The stack is indicative. Any deviation must be justified technically and validated with the
+supervisor.
+6. Suggested Phasing
+Phase
+Focus
+Outcome
+1
+State of the art &
+specification
+Understanding of RAG, comparison of vector DBs and
+chunking strategies, functional spec
+2
+Ingestion pipeline
+Documents → text → chunks → embeddings → vector DB,
+working end to end on PDF first
+3
+Search & RAG API
+Semantic search + LLM answer with citations, exposed via
+FastAPI
+4
+Frontend
+Upload UI, chat UI with sources, collections
+5
+Admin & analytics
+Roles, permissions, dashboards
+6
+Deployment &
+documentation
+Dockerized deployment, docs, final demo
+Ship a working vertical slice early (PDF → question → cited answer) before broadening to all
+
+===== Page 6 =====
+formats. A narrow pipeline that works beats a wide one that doesn’t.
+7. Expected Deliverables
+Functional web platform (source code, Git repository, clean commit history)
+REST API documentation
+Database and vector schema design
+Technical documentation (architecture, chunking and retrieval choices, and why)
+Deployment guide (Docker)
+User manual
+Live demonstration on a set of sample enterprise documents
+8. Skills Developed
+Data Engineering & document processing pipelines
+Natural Language Processing (NLP)
+Retrieval-Augmented Generation (RAG)
+Large Language Models (prompting, grounding, hallucination control)
+Information Retrieval & vector databases
+Backend API development (FastAPI)
+Frontend development (Next.js / React / TypeScript)
+Software architecture
+Docker-based deployment
+9. Evaluation Criteria
+Answer quality: are answers correct, grounded, and properly cited?
+Honesty of the system: does it say “I don’t know” instead of hallucinating?
+
+===== Page 7 =====
+Robustness of the pipeline: does it survive a messy 200-page scanned PDF?
+Code quality: structure, readability, tests on the critical path
+Autonomy: ability to research, decide, justify, and progress without being pushed
+Documentation & demo: can someone else run and understand the project?
+10. Industrial Perspective
+This is not a throwaway academic exercise. Once functional, the platform can be offered as
+a SaaS solution to organizations with heavy internal documentation:
+law firms, accounting firms, hospitals, universities, hotels, insurance companies,
+manufacturers, public administrations, and SMEs.
+Future extensions — Microsoft 365, Google Drive, SharePoint, Slack, Teams and email
+integrations — would turn it into a complete enterprise knowledge assistant.
+The intern is therefore contributing to a real product foundation, and is expected to treat it
+as such.
+Profile sought: engineering / master’s student in computer science, software engineering,
+or data science. Comfortable with Python and web development. Curious about LLMs and
+applied AI. Rigorous, autonomous, and able to document their work.
+

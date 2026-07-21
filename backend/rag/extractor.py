@@ -1,4 +1,8 @@
 import fitz  # pymupdf
+import json
+import os
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 
 class ExtractionError(Exception):
@@ -6,17 +10,7 @@ class ExtractionError(Exception):
     pass
 
 
-def extract_pdf_pages(filepath: str) -> list[dict]:
-    """
-    Extrait le texte d'un PDF, page par page.
-
-    Retourne une liste de dicts :
-    [
-        {"page_number": 1, "text": "..."},
-        {"page_number": 2, "text": "..."},
-        ...
-    ]
-    """
+def extract_pdf_pages(filepath: str, document_id: int) -> list[dict]:
     try:
         doc = fitz.open(filepath)
     except Exception as e:
@@ -30,6 +24,7 @@ def extract_pdf_pages(filepath: str) -> list[dict]:
 
         pages.append({
             "page_number": page_index + 1,
+            "document_id": document_id,
             "text": text.strip(),
         })
 
@@ -42,22 +37,20 @@ def extract_pdf_pages(filepath: str) -> list[dict]:
 
 
 def is_scanned_pdf(pages: list[dict], min_chars_threshold: int = 20) -> bool:
-    """
-    Heuristique simple : si la grande majorité des pages ont très peu
-    de texte extrait, c'est probablement un PDF scanné (image sans OCR).
-    """
     if not pages:
         return True
 
     empty_pages = sum(1 for p in pages if len(p["text"]) < min_chars_threshold)
     return (empty_pages / len(pages)) > 0.7
 
+
 if __name__ == "__main__":
-    pdf_path = r"C:\Users\Lenovo\Desktop\rag-chatbot\Sujet de stage\internship-subject-rag-knowledge-platform.pdf"      # PDF à lire
-    output_path = "extraction.txt"     # Fichier de sortie
+    pdf_path = r"C:\Users\Lenovo\Desktop\rag-chatbot\Sujet de stage\internship-subject-rag-knowledge-platform.pdf"
+    output_path = os.path.join(BASE_DIR, "extraction.txt")
+    pages_json_path = os.path.join(BASE_DIR, "pages.json")
 
     try:
-        pages = extract_pdf_pages(pdf_path)
+        pages = extract_pdf_pages(pdf_path, document_id=1)
 
         with open(output_path, "w", encoding="utf-8") as f:
             for page in pages:
@@ -65,7 +58,11 @@ if __name__ == "__main__":
                 f.write(page["text"])
                 f.write("\n\n")
 
+        with open(pages_json_path, "w", encoding="utf-8") as f:
+            json.dump(pages, f, indent=4, ensure_ascii=False)
+
         print(f"Extraction terminée. Texte enregistré dans : {output_path}")
+        print(f"Pages sauvegardées dans : {pages_json_path}")
 
         if is_scanned_pdf(pages):
             print("⚠️ Ce PDF semble être un PDF scanné.")

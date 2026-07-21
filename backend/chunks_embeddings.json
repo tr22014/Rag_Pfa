@@ -1,6 +1,7 @@
 [
     {
         "page_number": 1,
+        "document_id": 1,
         "chunk_id": 0,
         "text": "Internship Subject\nDesign and Development of an AI-Powered Enterprise\nKnowledge Management Platform\nRetrieval-Augmented Generation (RAG) & Large Language Models\nHost company: OneClick — Digital Agency, Marrakech Type: R&D / Full-stack + AI\nengineering internship Supervision: Ali Ourtanane\n1. Context\nModern organizations generate large volumes of unstructured information spread across\nmany document formats and storage systems: contracts, reports, procedures, invoices,\npresentations, scanned files, internal wikis. Finding a specific piece of information inside\nthis mass is slow, manual, and error-prone. Classic keyword search fails because it matches words, not meaning. Generic AI chatbots\nfail because they don’t know the company’s internal documents and tend to invent answers.",
         "embedding": [
@@ -393,6 +394,7 @@
     {
         "page_number": 1,
         "chunk_id": 1,
+        "document_id": 1,
         "text": "Generic AI chatbots\nfail because they don’t know the company’s internal documents and tend to invent answers. The goal of this internship is to build an intelligent platform that centralizes enterprise\nknowledge, indexes documents automatically, and answers questions in natural language —\ngrounded exclusively in the organization’s own documents, with source citations. The technical foundation is Retrieval-Augmented Generation (RAG): retrieve the relevant\npassages first, then let the LLM answer using only those passages. 2. Objective\nDesign, develop, and deploy a functional web platform that allows a company to:\n1. Upload and organize its internal documents. 2. Automatically process, index, and vectorize them. 3. Search them semantically, in natural language, in several languages.",
         "embedding": [
             -0.05978197231888771,
@@ -783,6 +785,7 @@
     },
     {
         "page_number": 2,
+        "document_id": 1,
         "chunk_id": 2,
         "text": "4. Ask questions to an AI assistant that answers with sources, never from imagination. 5. Administer users, collections, and models through a dashboard. 6. Measure usage and knowledge coverage through analytics. The intern is expected to work as a junior R&D engineer would in a real software company:\nunderstand the need, propose an architecture, build it, document it, and demo it. 3. Functional Scope\n3.1 Document Management\nUpload, organize, and version documents in the following formats:\nPDF\nWord (DOCX)\nExcel (XLSX)\nPowerPoint (PPTX)\nPlain text / Markdown\nImages (via OCR)\nWeb pages (URL ingestion)\nDocuments are grouped into knowledge collections (e.g. HR, Legal, Technical).",
         "embedding": [
@@ -1175,6 +1178,7 @@
     {
         "page_number": 2,
         "chunk_id": 3,
+        "document_id": 1,
         "text": "HR, Legal, Technical). 3.2 Data Processing Pipeline\nAn automated, asynchronous pipeline that:\nExtracts raw content from each format (including OCR for scanned files)\nCleans and normalizes the text\nSplits documents into semantic chunks (with overlap strategy)\nGenerates embeddings for each chunk\nStores vectors + metadata (source file, page, section, collection, permissions)\n3.3 AI Search Engine\nSemantic (vector) search",
         "embedding": [
             -0.052801866084337234,
@@ -1566,6 +1570,7 @@
     {
         "page_number": 3,
         "chunk_id": 4,
+        "document_id": 1,
         "text": "Hybrid search (vector + keyword) is a plus\nNatural-language query understanding\nContext retrieval and re-ranking\nSource citation on every result\nMultilingual queries (FR / EN / AR at minimum for query handling)\n3.4 Conversational Assistant\nA secure assistant that answers only from the internal knowledge base:\nConversation history\nContext awareness across turns\nFollow-up questions\nSource references (document + page)\nConfidence indicator\nExplicit “I don’t know” when the knowledge base has no answer — this behavior is\nmandatory, not optional\n3.5 Administration Dashboard\nUser management\nRole & permission management (who can see which collection)\nKnowledge collections management\nDocument management (re-index, delete, status of the pipeline)\nAI model configuration (model, temperature, chunk size, top-k)\nSearch analytics\n3.6 Analytics\nMost consulted documents\nMost frequent questions\nUnanswered questions (the most valuable metric: it reveals knowledge gaps)\nKnowledge coverage per collection",
         "embedding": [
             -0.03290387615561485,
@@ -1957,6 +1962,7 @@
     {
         "page_number": 4,
         "chunk_id": 5,
+        "document_id": 1,
         "text": "AI response statistics (latency, tokens, confidence)\n4. Target Architecture Documents │ PDF DOCX XLSX PPTX IMG URL │ ▼ Extraction & OCR │ ▼ Text Processing │ ▼ Chunk Generation │ ▼ Embedding Generation │ ▼ Vector Database │ ┌─────────┴─────────┐ │ │ Semantic Search Metadata DB │ │ └─────────┬─────────┘ │ ▼ LLM │ ▼ AI Response API │ ▼ Next.js Frontend 5. Technology Stack\nLayer\nTechnology",
         "embedding": [
             -0.054026324301958084,
@@ -2347,6 +2353,7 @@
     },
     {
         "page_number": 5,
+        "document_id": 1,
         "chunk_id": 6,
         "text": "Frontend\nNext.js, React, TypeScript, Tailwind CSS\nBackend\nPython, FastAPI\nAI / Orchestration\nLangChain or LlamaIndex\nLLM\nOpenAI, Claude, or open-source models\nEmbeddings\nSentence Transformers\nDatabase\nPostgreSQL\nVector store\npgvector or Qdrant\nFile storage\nCloudflare R2 or Amazon S3\nAuthentication\nJWT or Clerk\nDeployment\nDocker, Nginx\nThe stack is indicative. Any deviation must be justified technically and validated with the\nsupervisor. 6.",
         "embedding": [
@@ -2739,6 +2746,7 @@
     {
         "page_number": 5,
         "chunk_id": 7,
+        "document_id": 1,
         "text": "6. Suggested Phasing\nPhase\nFocus\nOutcome\n1\nState of the art &\nspecification\nUnderstanding of RAG, comparison of vector DBs and\nchunking strategies, functional spec\n2\nIngestion pipeline\nDocuments → text → chunks → embeddings → vector DB,\nworking end to end on PDF first\n3\nSearch & RAG API\nSemantic search + LLM answer with citations, exposed via\nFastAPI\n4\nFrontend\nUpload UI, chat UI with sources, collections\n5\nAdmin & analytics\nRoles, permissions, dashboards\n6\nDeployment &\ndocumentation\nDockerized deployment, docs, final demo\nShip a working vertical slice early (PDF → question → cited answer) before broadening to all",
         "embedding": [
             -0.04028535261750221,
@@ -3130,6 +3138,7 @@
     {
         "page_number": 6,
         "chunk_id": 8,
+        "document_id": 1,
         "text": "formats. A narrow pipeline that works beats a wide one that doesn’t.\n7. Expected Deliverables\nFunctional web platform (source code, Git repository, clean commit history)\nREST API documentation\nDatabase and vector schema design\nTechnical documentation (architecture, chunking and retrieval choices, and why)\nDeployment guide (Docker)\nUser manual\nLive demonstration on a set of sample enterprise documents\n8. Skills Developed\nData Engineering & document processing pipelines\nNatural Language Processing (NLP)\nRetrieval-Augmented Generation (RAG)\nLarge Language Models (prompting, grounding, hallucination control)\nInformation Retrieval & vector databases\nBackend API development (FastAPI)\nFrontend development (Next.js / React / TypeScript)\nSoftware architecture\nDocker-based deployment\n9. Evaluation Criteria\nAnswer quality: are answers correct, grounded, and properly cited?\nHonesty of the system: does it say “I don’t know” instead of hallucinating?",
         "embedding": [
             -0.05709018185734749,
@@ -3520,6 +3529,7 @@
     },
     {
         "page_number": 7,
+        "document_id": 1,
         "chunk_id": 9,
         "text": "Robustness of the pipeline: does it survive a messy 200-page scanned PDF? Code quality: structure, readability, tests on the critical path\nAutonomy: ability to research, decide, justify, and progress without being pushed\nDocumentation & demo: can someone else run and understand the project? 10. Industrial Perspective\nThis is not a throwaway academic exercise. Once functional, the platform can be offered as\na SaaS solution to organizations with heavy internal documentation:\nlaw firms, accounting firms, hospitals, universities, hotels, insurance companies,\nmanufacturers, public administrations, and SMEs. Future extensions — Microsoft 365, Google Drive, SharePoint, Slack, Teams and email\nintegrations — would turn it into a complete enterprise knowledge assistant. The intern is therefore contributing to a real product foundation, and is expected to treat it\nas such. Profile sought: engineering / master’s student in computer science, software engineering,\nor data science.",
         "embedding": [
@@ -3912,6 +3922,7 @@
     {
         "page_number": 7,
         "chunk_id": 10,
+        "document_id": 1,
         "text": "Profile sought: engineering / master’s student in computer science, software engineering,\nor data science. Comfortable with Python and web development. Curious about LLMs and\napplied AI. Rigorous, autonomous, and able to document their work.",
         "embedding": [
             -0.004247182980179787,

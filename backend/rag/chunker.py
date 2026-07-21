@@ -1,5 +1,7 @@
 import re
-
+import json
+import os
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 # Détection des titres
 TITLE_PATTERN = re.compile(
     r"^(\d+(\.\d+)*)?\s*[A-Z][A-Za-z0-9\s:/()\-]{2,}$"
@@ -23,7 +25,7 @@ def is_title(text: str) -> bool:
 
 
 def split_sentences(text: str):
-    """
+    """ 
     Découpe un texte en phrases.
     """
     return [
@@ -79,7 +81,7 @@ def chunk_pages(
     for page in pages:
 
         page_number = page["page_number"]
-
+        document_id = page["document_id"] 
         text = page["text"]
 
         if not text.strip():
@@ -128,6 +130,7 @@ def chunk_pages(
                     chunks.append({
                         "page_number": page_number,
                         "chunk_id": chunk_id,
+                        "document_id": document_id,
                         "text": paragraph,
                     })
 
@@ -175,6 +178,7 @@ def chunk_pages(
 
                         chunks.append({
                             "page_number": page_number,
+                            "document_id": document_id,
                             "chunk_id": chunk_id,
                             "text": " ".join(current),
                         })
@@ -206,6 +210,7 @@ def chunk_pages(
                     chunks.append({
                         "page_number": page_number,
                         "chunk_id": chunk_id,
+                        "document_id": document_id,
                         "text": text,
                     })
 
@@ -214,3 +219,15 @@ def chunk_pages(
             i += 1
 
     return chunks
+
+if __name__ == "__main__":
+
+    with open(os.path.join(BASE_DIR, "pages.json"), "r", encoding="utf-8") as f:
+        pages = json.load(f)
+
+    chunks = chunk_pages(pages)
+
+    with open(os.path.join(BASE_DIR, "chunks.json"), "w", encoding="utf-8") as f:
+        json.dump(chunks, f, indent=4, ensure_ascii=False)
+
+    print(f"{len(chunks)} chunks générés et enregistrés dans chunks.json")
