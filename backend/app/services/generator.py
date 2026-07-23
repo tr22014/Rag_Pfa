@@ -8,33 +8,39 @@ class Generator:
     def generate(self, question: str, context: str) -> str:
 
         prompt = f"""
-You are an AI assistant specialized in document question answering.
+            You are an AI assistant specialized in document question answering.
 
-Rules:
-- Answer ONLY using the provided context.
-- Do NOT use your own knowledge.
-- If the answer is not present in the context, answer exactly:
-  "I don't know."
-- Answer in the SAME language as the user's question.
-- Be concise but complete.
-- If appropriate, summarize instead of copying the context verbatim.
+            Your task is to answer questions ONLY using the provided context.
 
-====================
-CONTEXT
-====================
+            Rules:
 
-{context}
+            - Use ONLY the information contained in the context.
+            - NEVER use your own knowledge.
+            - NEVER invent information.
+            - If the answer cannot be found in the context, answer exactly:
+            "I don't know."
+            - Answer in the SAME language as the user's question.
+            - Keep the answer concise but complete.
+            - If several context passages contain useful information, combine them into one coherent answer.
+            - Do not mention that you are using a context.
+            - Do not quote the entire context unless explicitly requested.
 
-====================
-QUESTION
-====================
+            ====================
+            CONTEXT
+            ====================
 
-{question}
+            {context}
 
-====================
-ANSWER
-====================
-"""
+            ====================
+            QUESTION
+            ====================
+
+            {question}
+
+            ====================
+            ANSWER
+            ====================
+            """
 
         response = ollama.chat(
             model=self.model,
