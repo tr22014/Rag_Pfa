@@ -1,18 +1,42 @@
+version: "3.9"
 
 services:
 
+  postgres:
+    image: postgres:16
+    container_name: rag-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: rag_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7-alpine
+    container_name: rag-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+
   qdrant:
     image: qdrant/qdrant:latest
-    container_name: qdrant
+    container_name: rag-qdrant
+    restart: unless-stopped
     ports:
       - "6333:6333"
       - "6334:6334"
     volumes:
-      - ./qdrant_storage:/qdrant/storage
+      - qdrant_storage:/qdrant/storage
 
   backend:
     build: ./backend
     container_name: rag-backend
+    restart: unless-stopped
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
     ports:
       - "8000:8000"
     volumes:
@@ -20,14 +44,24 @@ services:
     env_file:
       - ./backend/.env
     depends_on:
+      - postgres
+      - redis
       - qdrant
 
-  frontend:
-    build: ./frontend
-    container_name: rag-frontend
-    ports:
-      - "3000:3000"
+  celery_worker:
+    build: ./backend
+    container_name: rag-worker
+    restart: unless-stopped
+    command: celery -A app.core.celery_app.celery_app worker --loglevel=info
     volumes:
-      - ./frontend:/app
+      - ./backend:/app
+    env_file:
+      - ./backend/.env
     depends_on:
-      - backend
+      - postgres
+      - redis
+      - qdrant
+
+volumes:
+  postgres_data:
+  qdrant_storage:

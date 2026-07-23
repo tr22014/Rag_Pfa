@@ -4,7 +4,7 @@ from sqlalchemy.sql import func
 from pgvector.sqlalchemy import Vector
 from database.database import Base
 
-from app.config import settings
+from app.core.config import settings
 
 
 class Chunk(Base):

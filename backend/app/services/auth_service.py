@@ -8,7 +8,7 @@ from sqlalchemy.orm import Session
 from app.services.user_service import UserService
 from app.schemas.user import UserCreate
 from app.models.user import User
-from app.config import settings
+from app.core.config import settings
 
 class AuthService:
 

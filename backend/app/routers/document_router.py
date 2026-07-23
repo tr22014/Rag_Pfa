@@ -6,12 +6,12 @@ from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, Form, s
 from sqlalchemy.orm import Session
 
 from database.database import get_db
-from app.core.dependencies import get_current_user, get_current_admin
-
+from app.core.dependencies import get_current_user
 from app.models.user import User
 from app.schemas.document import DocumentOut, DocumentUpdate
 from app.services.document_service import DocumentService
-from app.config import settings
+from app.tasks.ingestion_tasks import ingest_document
+from app.core.config import settings
 
 router = APIRouter(
     prefix="/documents",
@@ -27,8 +27,7 @@ os.makedirs(UPLOAD_DIR, exist_ok=True)
 @router.post(
     "/upload",
     response_model=DocumentOut,
-    status_code=status.HTTP_201_CREATED,
-    summary="Uploader un document"
+    status_code=status.HTTP_201_CREATED
 )
 def upload_document(
     file: UploadFile = File(...),
@@ -40,8 +39,8 @@ def upload_document(
 
     if ext not in ALLOWED_EXTENSIONS:
         raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail=f"Format non supporté: {ext}"
+            status_code=400,
+            detail=f"Format non supporté : {ext}"
         )
 
     stored_filename = f"{uuid.uuid4().hex}{ext}"
@@ -59,7 +58,8 @@ def upload_document(
         collection_id=collection_id,
     )
 
-    # TODO: déclencher ici le pipeline RAG (extraction -> chunk -> embeddings)
+    # Envoie le document dans la file Celery
+    ingest_document.delay(document.id)
 
     return document
 
@@ -97,7 +97,10 @@ def get_document(
             detail="Document introuvable"
         )
 
-    if current_user.role.value != "admin" and document.uploaded_by_id != current_user.id:
+    if (
+        current_user.role.value != "admin"
+        and document.uploaded_by_id != current_user.id
+    ):
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Accès refusé"
@@ -125,7 +128,10 @@ def update_document(
             detail="Document introuvable"
         )
 
-    if current_user.role.value != "admin" and document.uploaded_by_id != current_user.id:
+    if (
+        current_user.role.value != "admin"
+        and document.uploaded_by_id != current_user.id
+    ):
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Accès refusé"
@@ -152,7 +158,10 @@ def delete_document(
             detail="Document introuvable"
         )
 
-    if current_user.role.value != "admin" and document.uploaded_by_id != current_user.id:
+    if (
+        current_user.role.value != "admin"
+        and document.uploaded_by_id != current_user.id
+    ):
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Accès refusé"

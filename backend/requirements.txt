@@ -99,3 +99,6 @@ rich
 
 sentence-transformers
 torch
+celery 
+redis
+qdrant-client
