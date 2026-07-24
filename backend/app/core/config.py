@@ -6,7 +6,7 @@ class Settings(BaseSettings):
     database_url: str = "postgresql://postgres:root@localhost:5432/Rag_Chatbot"
 
     # Authentification
-    secret_key: str
+    secret_key: str = "1c2f0c95656bfd68028710247fab332d5045d55dad31787a00b938fa3d94c9c7"
     algorithm: str = "HS256"
     access_token_expire_minutes: int = 60
 
@@ -25,7 +25,7 @@ class Settings(BaseSettings):
     redis_url: str = "redis://redis:6379/0"
 
     # Qdrant
-    qdrant_url: str = "http://qdrant:6333"
+    qdrant_url: str = "http://localhost:6333"
 
     # Ollama
     ollama_base_url: str = "http://host.docker.internal:11434"

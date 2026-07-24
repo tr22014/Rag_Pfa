@@ -7,7 +7,7 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 client = QdrantClient(host="localhost", port=6333)
 
 COLLECTION_NAME = "knowledge_base"
-VECTOR_SIZE = 384
+VECTOR_SIZE = 768
 
 
 def create_collection():

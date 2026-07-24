@@ -1,6 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import declarative_base, sessionmaker
 from app.core.config import settings
+from sqlalchemy import text
 
 # URL de connexion PostgreSQL
 DATABASE_URL = settings.database_url

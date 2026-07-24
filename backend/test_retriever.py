@@ -1,6 +1,21 @@
-from app.services.retriever import Retriever
+from rag.retriever import Retriever
 
-r = Retriever()
-chunks = r.retrieve("What is the Target Architecture?")
-for c in chunks:
-    print(c["score"], "-", c["document_id"], "-", c["page"], "-", c["text"][:80])
+retriever = Retriever()
+
+question = "Quelle est le context de cet internship ?"
+
+results = retriever.retrieve(
+    question=question,
+    limit=5,
+)
+
+print(f"\nQuestion : {question}")
+print("=" * 80)
+
+for i, chunk in enumerate(results, 1):
+    print(f"Résultat {i}")
+    print(f"Source : {chunk['source']}")
+    print(f"Document : {chunk['document_id']}")
+    print(f"Page : {chunk['page']}")
+    print(chunk["text"])
+    print("-" * 80)

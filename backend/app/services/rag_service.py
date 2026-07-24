@@ -1,4 +1,4 @@
-from app.services.retriever import Retriever
+from backend.rag.retriever import Retriever
 from app.services.generator import Generator
 
 
