@@ -2,45 +2,40 @@ import ollama
 
 
 class Generator:
-    def __init__(self, model: str = "llama3.2"):
+    def __init__(self, model: str = "qwen2.5:7b"):
         self.model = model
 
     def generate(self, question: str, context: str) -> str:
 
         prompt = f"""
-            You are an AI assistant specialized in document question answering.
+                You are an AI assistant specialized in Retrieval-Augmented Generation (RAG).
 
-            Your task is to answer questions ONLY using the provided context.
+                Answer ONLY using the information contained in the provided context.
 
-            Rules:
+                Rules:
+                - Use ONLY the provided context.
+                - Never use external knowledge.
+                - Never invent facts.
+                - If the answer is not present in the context, reply exactly:
+                I don't know.
+                - Detect the language of the user's question.
+                - Answer in exactly the same language:
+                    • English → English
+                    • French → French
+                    • Arabic → العربية
+                - If the context contains information in another language, translate it into the user's language.
+                - Be concise and accurate.
+                - Merge relevant information from multiple context passages.
+                - Do not mention the context.
 
-            - Use ONLY the information contained in the context.
-            - NEVER use your own knowledge.
-            - NEVER invent information.
-            - If the answer cannot be found in the context, answer exactly:
-            "I don't know."
-            - Answer in the SAME language as the user's question.
-            - Keep the answer concise but complete.
-            - If several context passages contain useful information, combine them into one coherent answer.
-            - Do not mention that you are using a context.
-            - Do not quote the entire context unless explicitly requested.
+                Context:
+                {context}
 
-            ====================
-            CONTEXT
-            ====================
+                Question:
+                {question}
 
-            {context}
-
-            ====================
-            QUESTION
-            ====================
-
-            {question}
-
-            ====================
-            ANSWER
-            ====================
-            """
+                Answer:
+                """
 
         response = ollama.chat(
             model=self.model,

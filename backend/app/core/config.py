@@ -14,8 +14,8 @@ class Settings(BaseSettings):
     upload_dir: str = "uploads"
 
     # Embeddings
-    embedding_model_name: str = "sentence-transformers/all-MiniLM-L6-v2"
-    embedding_dimension: int = 384
+    embedding_model_name: str = "sentence-transformers/paraphrase-multilingual-mpnet-base-v2"
+    embedding_dimension: int = 768
 
     # Chunking
     chunk_size: int = 500
